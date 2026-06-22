@@ -11,12 +11,12 @@ class DistrictController extends Controller
     {
         $districts = District::latest()->paginate(10);
 
-        return view('districts.index', compact('districts'));
+        return view('district.index', compact('districts'));
     }
 
     public function create()
     {
-        return view('districts.create');
+        return view('district.create');
     }
 
     public function store(Request $request)
@@ -37,12 +37,12 @@ class DistrictController extends Controller
 
     public function show(District $district)
     {
-        return view('districts.show', compact('district'));
+        return view('district.show', compact('district'));
     }
 
     public function edit(District $district)
     {
-        return view('districts.edit', compact('district'));
+        return view('district.edit', compact('district'));
     }
 
     public function update(Request $request, District $district)

@@ -1,5 +1,3 @@
-{{-- resources/views/districts/edit.blade.php --}}
-
 @extends('layouts.app')
 
 @section('content')
@@ -10,16 +8,16 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h4 class="mb-0 fw-bold">Edit District</h4>
-                <small class="text-muted">Update district information</small>
+                <h4 class="mb-0 fw-bold">Edit Thana</h4>
+                <small class="text-muted">Update thana information</small>
             </div>
 
-            <a href="{{ route('districts.index') }}" class="btn btn-outline-primary btn-sm">
+            <a href="{{ route('thanas.index') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fa fa-arrow-left"></i> Back
             </a>
         </div>
 
-        <!-- Errors -->
+        <!-- Validation Errors -->
         @if ($errors->any())
             <div class="alert alert-danger border-0 shadow-sm">
                 <strong>Whoops!</strong> Please fix the errors below.
@@ -31,35 +29,52 @@
             </div>
         @endif
 
-        <!-- Card -->
+        <!-- Form Card -->
         <div class="card border-0 shadow-sm rounded-3">
 
             <div class="card-body p-4">
 
-                <form action="{{ route('districts.update', $district->id) }}" method="POST">
+                <form action="{{ route('thanas.update', $thana->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <div class="row g-3">
 
-                        <!-- Name -->
+                        <!-- District -->
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">District Name</label>
+                            <label class="form-label fw-semibold">District</label>
+                            <select name="district_id" class="form-select form-select-lg">
+
+                                <option value="">Select District</option>
+
+                                @foreach($districts as $district)
+                                    <option value="{{ $district->id }}"
+                                        {{ $thana->district_id == $district->id ? 'selected' : '' }}>
+                                        {{ $district->name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <!-- Thana Name -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Thana Name</label>
                             <input type="text"
                                    name="name"
-                                   value="{{ $district->name }}"
+                                   value="{{ $thana->name }}"
                                    class="form-control form-control-lg"
-                                   placeholder="Enter district name">
+                                   placeholder="Enter thana name">
                         </div>
 
                         <!-- Title -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="form-label fw-semibold">Title</label>
                             <input type="text"
                                    name="title"
-                                   value="{{ $district->title }}"
+                                   value="{{ $thana->title }}"
                                    class="form-control form-control-lg"
-                                   placeholder="Enter district title">
+                                   placeholder="Enter title (optional)">
                         </div>
 
                     </div>
@@ -67,7 +82,7 @@
                     <!-- Submit -->
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary px-4">
-                            <i class="fa fa-save me-1"></i> Update District
+                            <i class="fa fa-save me-1"></i> Update Thana
                         </button>
                     </div>
 

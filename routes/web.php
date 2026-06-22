@@ -9,6 +9,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\ThanaController;
+use App\Http\Controllers\BranchController;
    
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +25,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('districts', DistrictController::class);
+    Route::resource('thanas', ThanaController::class);
+    Route::resource('branches', BranchController::class);
 });
 Auth::routes();
 

@@ -1,5 +1,3 @@
-{{-- resources/views/districts/show.blade.php --}}
-
 @extends('layouts.app')
 
 @section('content')
@@ -10,11 +8,11 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h4 class="mb-0 fw-bold">District Details</h4>
-                <small class="text-muted">View district information</small>
+                <h4 class="mb-0 fw-bold">Thana Details</h4>
+                <small class="text-muted">View thana information</small>
             </div>
 
-            <a href="{{ route('districts.index') }}" class="btn btn-outline-primary btn-sm">
+            <a href="{{ route('thanas.index') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fa fa-arrow-left"></i> Back
             </a>
         </div>
@@ -26,49 +24,59 @@
 
                 <div class="row g-3">
 
-                    <!-- Name -->
+                    <!-- District -->
                     <div class="col-md-6">
                         <div class="p-3 border rounded bg-light">
-                            <label class="text-muted">District Name</label>
-                            <h5 class="mb-0 fw-bold">{{ $district->name }}</h5>
+                            <small class="text-muted">District</small>
+                            <h5 class="mb-0 fw-bold">
+                                {{ $thana->district->name ?? 'N/A' }}
+                            </h5>
+                        </div>
+                    </div>
+
+                    <!-- Thana Name -->
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded bg-light">
+                            <small class="text-muted">Thana Name</small>
+                            <h5 class="mb-0 fw-bold">{{ $thana->name }}</h5>
                         </div>
                     </div>
 
                     <!-- Title -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="p-3 border rounded bg-light">
-                            <label class="text-muted">Title</label>
-                            <h5 class="mb-0 fw-bold">{{ $district->title }}</h5>
+                            <small class="text-muted">Title</small>
+                            <h6 class="mb-0">{{ $thana->title ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
                     <!-- Created -->
                     <div class="col-md-6">
                         <div class="p-3 border rounded bg-light">
-                            <label class="text-muted">Created At</label>
-                            <h6 class="mb-0">{{ $district->created_at }}</h6>
+                            <small class="text-muted">Created At</small>
+                            <h6 class="mb-0">{{ $thana->created_at }}</h6>
                         </div>
                     </div>
 
                     <!-- Updated -->
                     <div class="col-md-6">
                         <div class="p-3 border rounded bg-light">
-                            <label class="text-muted">Updated At</label>
-                            <h6 class="mb-0">{{ $district->updated_at }}</h6>
+                            <small class="text-muted">Updated At</small>
+                            <h6 class="mb-0">{{ $thana->updated_at }}</h6>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Footer Button -->
+                <!-- Action Buttons -->
                 <div class="d-flex justify-content-end mt-4">
 
-                    <a href="{{ route('districts.edit', $district->id) }}"
+                    <a href="{{ route('thanas.edit', $thana->id) }}"
                        class="btn btn-primary px-4 me-2">
                         <i class="fa fa-edit me-1"></i> Edit
                     </a>
 
-                    <a href="{{ route('districts.index') }}"
+                    <a href="{{ route('thanas.index') }}"
                        class="btn btn-secondary px-4">
                         Back
                     </a>

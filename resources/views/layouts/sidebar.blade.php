@@ -62,9 +62,11 @@
 						<div class="menu-title">Branch</div>
 					</a>
 					<ul>
-						<li> <a href="{{ route('products.index') }}"><i class='bx bx-radio-circle'></i> District </a>
+						<li> <a href="{{ route('districts.index') }}"><i class='bx bx-radio-circle'></i> District </a>
 						</li>
-						<li> <a href="{{ route('products.create') }}"><i class='bx bx-radio-circle'></i> Thana </a>
+						<li> <a href="{{ route('thanas.index') }}"><i class='bx bx-radio-circle'></i> Thana </a>
+						</li>						 
+						<li> <a href="{{ route('branches.index') }}"><i class='bx bx-radio-circle'></i> Branch </a>
 						</li>						 
 					</ul>
 				</li>
