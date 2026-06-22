@@ -79,15 +79,24 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): View
-    {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
-    
-        return view('roles.show',compact('role','rolePermissions'));
-    }
+public function show($id): View
+{
+    $role = Role::findOrFail($id);
+
+    $rolePermissions = Permission::join(
+            "role_has_permissions",
+            "role_has_permissions.permission_id",
+            "=",
+            "permissions.id"
+        )
+        ->where("role_has_permissions.role_id", $id)
+        ->pluck('permissions.id') // 🔥 IMPORTANT FIX
+        ->toArray();
+
+    $permissions = Permission::all(); // 🔥 ADD THIS
+
+    return view('roles.show', compact('role','rolePermissions','permissions'));
+}
     
     /**
      * Show the form for editing the specified resource.

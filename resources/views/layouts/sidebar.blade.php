@@ -13,21 +13,34 @@
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
 				<li>
-					<a href="javascript:;" class="has-arrow">
-						<div class="parent-icon"><i class='bx bx-home-alt'></i>
-						</div>
+					<a href="{{ route('home')}}">
+						
 						<div class="menu-title">Dashboard</div>
 					</a>
-					<ul>
+					<!-- <ul>
 						<li> <a href="index.html"><i class='bx bx-radio-circle'></i>Default</a>
 						</li>
 						<li> <a href="index2.html"><i class='bx bx-radio-circle'></i>Alternate</a>
 						</li>
 						<li> <a href="index3.html"><i class='bx bx-radio-circle'></i>Graphical</a>
 						</li>
-					</ul>
+					</ul> -->
 				</li>
 				
+				<li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">User</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('users.index') }}"><i class='bx bx-radio-circle'></i>List</a>
+						</li>
+						<li> <a href="{{ route('users.create') }}"><i class='bx bx-radio-circle'></i>Create</a>
+						</li>						 
+					</ul>
+				</li>
+
 				<li>
 					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class="bx bx-category"></i>
@@ -38,11 +51,41 @@
 						<li> <a href="{{ route('roles.index') }}"><i class='bx bx-radio-circle'></i>List</a>
 						</li>
 						<li> <a href="{{ route('roles.create') }}"><i class='bx bx-radio-circle'></i>Create</a>
-						</li>
-						 
-						 
+						</li>						 
 					</ul>
 				</li>
+
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Branch</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('products.index') }}"><i class='bx bx-radio-circle'></i> District </a>
+						</li>
+						<li> <a href="{{ route('products.create') }}"><i class='bx bx-radio-circle'></i> Thana </a>
+						</li>						 
+					</ul>
+				</li>
+
+
+                <li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Products</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('products.index') }}"><i class='bx bx-radio-circle'></i>List</a>
+						</li>
+						<li> <a href="{{ route('products.create') }}"><i class='bx bx-radio-circle'></i>Create</a>
+						</li>						 
+					</ul>
+				</li>
+
+
+
 				<li class="menu-label">UI Elements</li>
 				<li>
 					<a href="widgets.html">

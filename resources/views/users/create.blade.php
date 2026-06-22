@@ -1,104 +1,110 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-primary">Create New User</h3>
+<div class="page-wrapper">
+    <div class="page-content">
 
-        <a href="{{ route('users.index') }}" class="btn btn-outline-primary btn-sm">
-            <i class="fa fa-arrow-left"></i> Back
-        </a>
-    </div>
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="mb-0 fw-bold">Create New User</h4>
+                <small class="text-muted">Add system user with roles</small>
+            </div>
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger shadow-sm">
-            <strong>Whoops!</strong> There were some problems with your input.
-            <ul class="mb-0 mt-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <a href="{{ route('users.index') }}" class="btn btn-outline-primary btn-sm">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
         </div>
-    @endif
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
+        <!-- Errors -->
+        @if (count($errors) > 0)
+            <div class="alert alert-danger border-0 shadow-sm">
+                <strong>Whoops!</strong> Please fix the errors below.
+                <ul class="mb-0 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            <form method="POST" action="{{ route('users.store') }}">
-                @csrf
+        <!-- Card -->
+        <div class="card border-0 shadow-sm rounded-3">
 
-                <div class="row g-3">
+            <div class="card-body p-4">
 
-                    <!-- Name -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter full name">
-                    </div>
+                <form method="POST" action="{{ route('users.store') }}">
+                    @csrf
 
-                    <!-- Email -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter email">
-                    </div>
+                    <div class="row g-3">
 
-                    <!-- Password -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                    </div>
+                        <!-- Name -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Full Name</label>
+                            <input type="text"
+                                   name="name"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter full name">
+                        </div>
 
-                    <!-- Confirm Password -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Confirm Password</label>
-                        <input type="password" name="confirm-password" class="form-control" placeholder="Confirm password">
-                    </div>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter email">
+                        </div>
 
-                    <!-- UID -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Unique ID</label>
-                        <input type="text" name="uid" class="form-control bg-light" placeholder="Auto Generate" readonly>
-                    </div>
+                        <!-- Password -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Password</label>
+                            <input type="password"
+                                   name="password"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter password">
+                        </div>
 
-                    <!-- Roles -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">Role</label>
-                        <select name="roles[]" class="form-select" multiple>
-                            @foreach ($roles as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
+                        <!-- Confirm Password -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Confirm Password</label>
+                            <input type="password"
+                                   name="confirm-password"
+                                   class="form-control form-control-lg"
+                                   placeholder="Confirm password">
+                        </div>
+
+                       
+
+                        <!-- Roles -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Assign Role</label>
+
+                            <select name="roles[]" class="form-select form-select-lg" multiple>
+                                @foreach ($roles as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+
+                            <small class="text-muted">Hold CTRL to select multiple roles</small>
+                        </div>
+
                     </div>
 
                     <!-- Submit -->
-                    <div class="col-12 text-end mt-3">
-                        <button type="submit" class="btn btn-primary px-4">
-                            <i class="fa-solid fa-floppy-disk"></i> Save User
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="fa fa-save me-1"></i> Save User
                         </button>
                     </div>
 
-                </div>
-            </form>
+                </form>
 
+            </div>
         </div>
+
     </div>
-
 </div>
-
-<!-- Optional small UI improvement -->
-<style>
-    .form-control, .form-select {
-        border-radius: 10px;
-        padding: 10px;
-    }
-
-    .card {
-        border-radius: 15px;
-    }
-
-    body {
-        background: #f5f7fb;
-    }
-</style>
 
 @endsection
