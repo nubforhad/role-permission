@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class LoanCategory extends Model
+class InstallmentType extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'title',
-        'details',
+        'type_name',
+        'duration',
+        'ins_code',
     ];
 }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('loan_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('title');
+            $table->text('details')->nullable();
             $table->timestamps();
         });
     }
