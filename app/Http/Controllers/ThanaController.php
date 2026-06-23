@@ -8,6 +8,15 @@ use App\Models\District;
 
 class ThanaController extends Controller
 {
+
+    function __construct()
+    {
+         $this->middleware('permission:thana-list|thana-create|thana-edit|thana-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:thana-create', ['only' => ['create','store']]);
+         $this->middleware('permission:thana-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:thana-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $thanas = Thana::with('district')->latest()->paginate(10);
