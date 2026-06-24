@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('installment-types', InstallmentTypeController::class);
     Route::resource('loan-sections', LoanSectionController::class);
     Route::resource('members', MemberController::class);
-    Route::resource('', NomineeController::class);
+    Route::resource('nominees', NomineeController::class);
 });
 Auth::routes();
 

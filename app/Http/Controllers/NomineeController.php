@@ -71,4 +71,47 @@ class NomineeController extends Controller
         return view('nominees.edit', compact('nominee', 'members'));
     }
 
+    public function update(Request $request, Nominee $nominee)
+    {
+        $request->validate([
+            'member_id' => 'required|exists:members,id',
+            'nominee_name' => 'required|string|max:255',
+            'mobile_number' => 'nullable|max:20',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'signature' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'document_file' => 'nullable|file|max:5120',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')
+                ->store('nominees/photo', 'public');
+        }
+
+        if ($request->hasFile('signature')) {
+            $data['signature'] = $request->file('signature')
+                ->store('nominees/signature', 'public');
+        }
+
+        if ($request->hasFile('document_file')) {
+            $data['document_file'] = $request->file('document_file')
+                ->store('nominees/document', 'public');
+        }
+
+        $nominee->update($data);
+
+        return redirect()
+            ->route('nominees.index')
+            ->with('success', 'Nominee updated successfully.');
+    }
+
+    public function destroy(Nominee $nominee)
+    {
+        $nominee->delete();
+
+        return redirect()
+            ->route('nominees.index')
+            ->with('success', 'Nominee deleted successfully.');
+    }
 }

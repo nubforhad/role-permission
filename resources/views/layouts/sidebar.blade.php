@@ -94,6 +94,8 @@
 					<ul>
 						<li> <a href="{{ route('members.index') }}"><i class='bx bx-radio-circle'></i> Members </a>
 						</li>
+						<li> <a href="{{ route('nominees.index') }}"><i class='bx bx-radio-circle'></i> Nominees </a>
+						</li>
 					 					 
 					</ul>
 				</li>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Nominee extends Model
@@ -22,6 +23,7 @@ class Nominee extends Model
         'signature',
         'document_file',
     ];
+
 
     public function member()
     {
