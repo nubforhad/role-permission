@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('nominees', function (Blueprint $table) {
@@ -18,16 +16,12 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('nominee_name');
-
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
 
-            $table->string('mobile_number', 20)->nullable();
-
+            $table->string('mobile_number', 20);
             $table->string('relation')->nullable();
-
             $table->string('nid_number')->nullable();
-
             $table->text('address')->nullable();
 
             $table->string('photo')->nullable();

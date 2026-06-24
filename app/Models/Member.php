@@ -65,4 +65,8 @@ class Member extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function nominee()
+    {
+        return $this->hasOne(Nominee::class);
+    }
 }
