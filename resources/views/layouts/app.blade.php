@@ -13,6 +13,8 @@
 	<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
 	<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet"/>
 	<!-- loader-->
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet"/>
 	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
 	<!-- Bootstrap CSS --> 
@@ -205,7 +207,39 @@
 	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
 	<script src="{{ asset('assets/js/index.js') }}"></script>
 	<script src="{{ asset('assets/js/app.js') }}"></script>
-	
+	<script>
+$(document).ready(function () {
+    $(".mobile-toggle-menu").click(function () {
+        $(".wrapper").toggleClass("toggled");
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelector('.toggle-icon').addEventListener('click', function() {
+        document.querySelector('.wrapper').classList.toggle('toggled');
+    });
+
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+    
+    $('.sidebar-wrapper ul ul').hide();
+
+    $('.has-arrow').on('click', function (e) {
+        e.preventDefault();
+        $(this).next('ul').slideToggle(300);
+    });
+
+});
+</script>
+
+
 	<script>
 		new PerfectScrollbar(".app-container")
 	</script>

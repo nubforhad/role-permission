@@ -12,21 +12,15 @@
 			 </div>
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
+				
+				
 				<li>
 					<a href="{{ route('home')}}">
-						
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
 						<div class="menu-title">Dashboard</div>
-					</a>
-					<!-- <ul>
-						<li> <a href="index.html"><i class='bx bx-radio-circle'></i>Default</a>
-						</li>
-						<li> <a href="index2.html"><i class='bx bx-radio-circle'></i>Alternate</a>
-						</li>
-						<li> <a href="index3.html"><i class='bx bx-radio-circle'></i>Graphical</a>
-						</li>
-					</ul> -->
+					</a> 
 				</li>
-				
 				<li>
 					<a href="{{ route('users.index') }}">
 						<div class="parent-icon"><i class="bx bx-category"></i>
@@ -103,8 +97,7 @@
 						</div>
 						<div class="menu-title">Member</div>
 					</a> 
-				</li>
-                 
+				</li>             
                 
 
                 <li>
