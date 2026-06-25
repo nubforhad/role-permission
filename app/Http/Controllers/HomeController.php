@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Member;
+use App\Models\Branch;
 
 class HomeController extends Controller
 {
@@ -25,7 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         $totalUser = User::count();
+        $totalBranch = Branch::count();
+        $totalMember = Member::count();
 
-        return view('home', compact('totalUser'));
+        return view('home', compact('totalUser','totalMember','totalBranch'));
     }
 }
