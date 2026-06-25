@@ -28,78 +28,84 @@
 				</li>
 				
 				<li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{ route('users.index') }}">
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
 						<div class="menu-title">User</div>
-					</a>
-					<ul>
-						<li> <a href="{{ route('users.index') }}"><i class='bx bx-radio-circle'></i>List</a>
-						</li>
-						<li> <a href="{{ route('users.create') }}"><i class='bx bx-radio-circle'></i>Create</a>
-						</li>						 
-					</ul>
+					</a> 
 				</li>
 
 				<li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{ route('roles.index') }}" >
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
 						<div class="menu-title">Role</div>
-					</a>
-					<ul>
-						<li> <a href="{{ route('roles.index') }}"><i class='bx bx-radio-circle'></i>List</a>
-						</li>
-						<li> <a href="{{ route('roles.create') }}"><i class='bx bx-radio-circle'></i>Create</a>
-						</li>						 
-					</ul>
+					</a> 
 				</li>
 
                 <li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{ route('districts.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">District</div>
+					</a> 
+				</li>
+                <li>
+					<a href="{{ route('thanas.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Thana</div>
+					</a> 
+				</li>
+                <li>
+					<a href="{{ route('branches.index') }}" >
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
 						<div class="menu-title">Branch</div>
-					</a>
-					<ul>
-						<li> <a href="{{ route('districts.index') }}"><i class='bx bx-radio-circle'></i> District </a>
-						</li>
-						<li> <a href="{{ route('thanas.index') }}"><i class='bx bx-radio-circle'></i> Thana </a>
-						</li>						 
-						<li> <a href="{{ route('branches.index') }}"><i class='bx bx-radio-circle'></i> Branch </a>
-						</li>						 
-					</ul>
+					</a> 
 				</li>
+                 
                 <li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{ route('loan-sections.index') }}" >
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
-						<div class="menu-title">Loan</div>
-					</a>
-					<ul>
-						<li> <a href="{{ route('loan-categories.index') }}"><i class='bx bx-radio-circle'></i> Loan Category </a>
-						</li>
-						<li> <a href="{{ route('installment-types.index') }}"><i class='bx bx-radio-circle'></i> Installment Types </a>
-						</li>						 
-						<li> <a href="{{ route('loan-sections.index') }}"><i class='bx bx-radio-circle'></i> loan section </a>
-						</li>						 
-					</ul>
+						<div class="menu-title">Loan Section</div>
+					</a> 
 				</li>
+                 
                 <li>
-					<a href="javascript:;" class="has-arrow">
+					<a href="{{ route('installment-types.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Installment</div>
+					</a> 
+				</li>
+                 
+                <li>
+					<a href="{{ route('loan-categories.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Loan Category</div>
+					</a> 
+				</li>
+                 
+                <li>
+					<a href="{{ route('nominees.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Nominees</div>
+					</a> 
+				</li>
+                 
+                <li>
+					<a href="{{ route('members.index') }}" >
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
 						<div class="menu-title">Member</div>
-					</a>
-					<ul>
-						<li> <a href="{{ route('members.index') }}"><i class='bx bx-radio-circle'></i> Members </a>
-						</li>
-						<li> <a href="{{ route('nominees.index') }}"><i class='bx bx-radio-circle'></i> Nominees </a>
-						</li>
-					 					 
-					</ul>
+					</a> 
 				</li>
-
+                 
+                
 
                 <li>
 					<a href="javascript:;" class="has-arrow">
