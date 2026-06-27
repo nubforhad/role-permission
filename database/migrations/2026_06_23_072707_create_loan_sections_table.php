@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('installment_type_id')->constrained('installment_types')->onDelete('cascade');
             $table->foreignId('loan_category_id')->constrained('loan_categories')->onDelete('cascade');
+
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
 
             $table->decimal('loan_amount', 12, 2);

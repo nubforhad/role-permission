@@ -16,6 +16,7 @@ use App\Http\Controllers\InstallmentTypeController;
 use App\Http\Controllers\LoanSectionController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NomineeController;
+use App\Http\Controllers\LoanCollectionController;
    
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('loan-sections', LoanSectionController::class);
     Route::resource('members', MemberController::class);
     Route::resource('nominees', NomineeController::class);
+    Route::resource('loan-collections', LoanCollectionController::class);
 });
 Auth::routes();
 

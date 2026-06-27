@@ -8,6 +8,7 @@ use App\Models\InstallmentType;
 use App\Models\LoanCategory;
 use App\Models\Branch;
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class LoanSectionController extends Controller
 {
@@ -17,7 +18,8 @@ class LoanSectionController extends Controller
             'user',
             'installmentType',
             'loanCategory',
-            'branch'
+            'branch',
+            'member'
         ])->latest()->paginate(10);
 
         return view('loanSections.index', compact('loans'));
@@ -29,12 +31,14 @@ class LoanSectionController extends Controller
         $installments = InstallmentType::all();
         $categories = LoanCategory::all();
         $branches = Branch::all();
+        $members = Member::all();
 
         return view('loanSections.create', compact(
             'users',
             'installments',
             'categories',
-            'branches'
+            'branches',
+            'members'
         ));
     }
 
@@ -45,6 +49,7 @@ class LoanSectionController extends Controller
             'installment_type_id' => 'required',
             'loan_category_id' => 'required',
             'branch_id' => 'required',
+            'member_id' => 'required',
             'loan_amount' => 'required|numeric|min:0',
             'interest' => 'nullable|numeric|min:0',
             'total_installment' => 'required|numeric|min:1',
@@ -65,6 +70,7 @@ class LoanSectionController extends Controller
             'installment_type_id' => $request->installment_type_id,
             'loan_category_id' => $request->loan_category_id,
             'branch_id' => $request->branch_id,
+           'member_id' => $request->member_id,
 
             'loan_amount' => $request->loan_amount,
             'interest' => $interest,
@@ -90,7 +96,8 @@ class LoanSectionController extends Controller
             'user',
             'installmentType',
             'loanCategory',
-            'branch'
+            'branch',
+            'member'
         ]);
 
         return view('loanSections.show', compact('loanSection'));
@@ -102,13 +109,15 @@ class LoanSectionController extends Controller
         $installments = InstallmentType::all();
         $categories = LoanCategory::all();
         $branches = Branch::all();
+        $members = Member::all();
 
         return view('loanSections.edit', compact(
             'loanSection',
             'users',
             'installments',
             'categories',
-            'branches'
+            'branches',
+            'members'
         ));
     }
 
@@ -119,6 +128,7 @@ class LoanSectionController extends Controller
             'installment_type_id' => 'required',
             'loan_category_id' => 'required',
             'branch_id' => 'required',
+            'member_id' => 'required',
             'loan_amount' => 'required|numeric|min:0',
             'interest' => 'nullable|numeric|min:0',
             'total_installment' => 'required|numeric|min:1',
@@ -141,6 +151,7 @@ class LoanSectionController extends Controller
             'installment_type_id' => $request->installment_type_id,
             'loan_category_id' => $request->loan_category_id,
             'branch_id' => $request->branch_id,
+            'member_id' => $request->member_id,
 
             'loan_amount' => $request->loan_amount,
             'interest' => $interest,

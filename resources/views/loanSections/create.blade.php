@@ -88,6 +88,19 @@
                             </select>
                         </div>
 
+                        <!-- Member -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Member</label>
+                            <select name="member_id" class="form-control" required>
+                                <option value="">Select Member</option>
+                                @foreach($members as $member)
+                                    <option value="{{ $member->id }}">
+                                        ({{ $member->member_code }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <!-- Loan Amount -->
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Loan Amount</label>
