@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LoanCollection;
 use App\Models\LoanSection;
 use App\Models\Member;
-use Illuminate\Http\Request;
-
+use Illuminate\Http\Request; 
  
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -100,14 +99,41 @@ class LoanCollectionController extends Controller
     /**
      * Show single record
      */
-    public function show($id)
-    {
-        $loanCollection = LoanCollection::with(['loan', 'member', 'employee'])
-            ->findOrFail($id);
+    // public function show($id)
+    // {
+    //     $loanCollection = LoanCollection::with(['loan', 'member', 'employee'])
+    //         ->findOrFail($id);
 
-        return view('loan_collections.show', compact('loanCollection'));
-    }
+    //     return view('loan_collections.show', compact('loanCollection'));
+    // }
+ 
 
+
+public function show(LoanCollection $loanCollection)
+{
+    $loanCollection->load([
+        'member',
+        'employee',
+        'loanSection'
+    ]);
+
+    // Total Loan Amount
+    $totalLoanAmount = $loanCollection->loanSection->total_amount;
+
+    // Total Paid Amount for this Loan
+    $totalPaidAmount = LoanCollection::where('loan_section_id', $loanCollection->loan_section_id)
+        ->sum('paid_amount');
+
+    // Total Due
+    $totalDue = $totalLoanAmount - $totalPaidAmount;
+
+    return view('loan_collections.show', compact(
+        'loanCollection',
+        'totalLoanAmount',
+        'totalPaidAmount',
+        'totalDue'
+    ));
+} 
 
 public function downloadPdf(LoanCollection $loanCollection)
 {

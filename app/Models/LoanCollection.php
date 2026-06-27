@@ -54,6 +54,10 @@ class LoanCollection extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function loanSection()
+{
+    return $this->belongsTo(LoanSection::class, 'loan_section_id');
+}
 
     /*
     |--------------------------------------------------------------------------

@@ -112,6 +112,29 @@
                         <p>{{ $loanCollection->updated_at->format('d M Y h:i A') }}</p>
                     </div>
 
+                    
+<div class="col-md-4 mb-3">
+    <label class="fw-bold">Total Loan Amount</label>
+    <p class="text-primary fw-bold">
+        {{ number_format($totalLoanAmount, 2) }}
+    </p>
+</div>
+
+<div class="col-md-4 mb-3">
+    <label class="fw-bold">Total Paid Amount</label>
+    <p class="text-success fw-bold">
+        {{ number_format($totalPaidAmount, 2) }}
+    </p>
+</div>
+
+<div class="col-md-4 mb-3">
+    <label class="fw-bold">Total Due Amount</label>
+    <p class="text-danger fw-bold">
+        {{ number_format($totalDue, 2) }}
+    </p>
+</div> 
+
+
                 </div>
 
             </div>
@@ -122,10 +145,7 @@
                     <i class="bx bx-edit"></i> Edit
                 </a>
 
-                <a href="{{ route('loan-collections.download-pdf') }}"
-                   class="btn btn-secondary">
-                    Download
-                </a>
+                
                 <a href="{{ route('loan-collections.index') }}"
                    class="btn btn-secondary">
                     Back
