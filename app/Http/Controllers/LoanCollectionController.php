@@ -7,6 +7,9 @@ use App\Models\LoanSection;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
+ 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class LoanCollectionController extends Controller
 {
     /**
@@ -15,8 +18,7 @@ class LoanCollectionController extends Controller
     public function create()
     {
         $loans = LoanSection::with('user')->get();
-        $members = Member::all();
-
+        $members = Member::all(); 
         return view('loan_collections.create', compact('loans', 'members'));
     }
 
@@ -24,38 +26,41 @@ class LoanCollectionController extends Controller
      * Store installment collection
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'loan_section_id'   => 'required|exists:loan_sections,id',
-            'member_id'         => 'required|exists:members,id',
-            'member_code'       => 'required',
-            'installment_amount'=> 'required|numeric|min:0',
-            'paid_amount'       => 'required|numeric|min:0',
-            'penalty_charge'    => 'nullable|numeric|min:0',
-            'paid_date'         => 'nullable|date',
-        ]);
+{
+    $request->validate([
+        'loan_section_id'      => 'required|exists:loan_sections,id',
+        'member_id'            => 'required|exists:members,id',
+        'member_code'          => 'required',
+        'installment_amount'   => 'required|numeric',
+        'paid_amount'          => 'required|numeric',
+        'penalty_charge'       => 'nullable|numeric',
+        'installment_date'     => 'nullable|date',
+        'paid_date'            => 'nullable|date',
+        'expire_date'          => 'nullable|date',
+        'status'               => 'required',
+        'remark'               => 'nullable'
+    ]);
 
-        $loan = LoanSection::findOrFail($request->loan_section_id);
+    LoanCollection::create([
+        'loan_section_id'     => $request->loan_section_id,
+        'user_id'             => auth()->id(),
+        'member_id'           => $request->member_id,
+        'employee_id'         => auth()->id(),
+        'member_code'         => $request->member_code,
+        'installment_amount'  => $request->installment_amount,
+        'paid_amount'         => $request->paid_amount,
+        'penalty_charge'      => $request->penalty_charge,
+        'installment_date'    => $request->installment_date,
+        'paid_date'           => $request->paid_date,
+        'expire_date'         => $request->expire_date,
+        'status'              => $request->status,
+        'remark'              => $request->remark,
+    ]);
 
-        // Create collection
-        $collection = LoanCollection::create([
-            'loan_section_id'    => $loan->id,
-            'user_id'            => auth()->id(),
-            'member_id'          => $request->member_id,
-            'employee_id'        => auth()->id(),
-            'member_code'        => $request->member_code,
-            'installment_amount' => $request->installment_amount,
-            'paid_amount'        => $request->paid_amount,
-            'penalty_charge'     => $request->penalty_charge ?? 0,
-            'installment_date'   => now(),
-            'paid_date'          => $request->paid_date,
-        ]);
-
-        // Auto status update
-        $this->updateStatus($collection);
-
-        return redirect()->back()->with('success', 'Installment collected successfully!');
-    }
+    return redirect()
+        ->route('loan-collections.index')
+        ->with('success','Loan Collection Added Successfully.');
+}
 
     /**
      * Update installment status
@@ -97,9 +102,26 @@ class LoanCollectionController extends Controller
      */
     public function show($id)
     {
-        $collection = LoanCollection::with(['loan', 'member', 'employee'])
+        $loanCollection = LoanCollection::with(['loan', 'member', 'employee'])
             ->findOrFail($id);
 
-        return view('loan_collections.show', compact('collection'));
+        return view('loan_collections.show', compact('loanCollection'));
     }
+
+
+public function downloadPdf(LoanCollection $loanCollection)
+{
+    $loanCollection->load([
+        'member',
+        'employee',
+        'loanSection'
+    ]);
+
+    $pdf = Pdf::loadView('loan_collections.pdf', compact('loanCollection'))
+              ->setPaper('A4', 'portrait');
+
+    return $pdf->download('Loan-Collection-'.$loanCollection->id.'.pdf');
+}
+ 
+
 }

@@ -39,6 +39,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('members', MemberController::class);
     Route::resource('nominees', NomineeController::class);
     Route::resource('loan-collections', LoanCollectionController::class);
+
+  
+Route::get('/loan-collections/{loanCollection}/download-pdf', [LoanCollectionController::class, 'downloadPdf'])
+    ->name('loan-collections.download-pdf');
+
+
 });
 Auth::routes();
 
