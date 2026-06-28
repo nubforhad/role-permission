@@ -15,6 +15,8 @@ class LoanSection extends Model
         'installment_type_id',
         'loan_category_id',
         'branch_id',
+        'member_id',
+        'member_code',
         'loan_amount',
         'loan_status',
         'upline_status',
@@ -44,6 +46,7 @@ class LoanSection extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
     public function member()
     {
         return $this->belongsTo(Member::class);

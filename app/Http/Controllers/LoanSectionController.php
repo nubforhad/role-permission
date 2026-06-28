@@ -50,6 +50,7 @@ class LoanSectionController extends Controller
             'loan_category_id' => 'required',
             'branch_id' => 'required',
             'member_id' => 'required',
+            'member_code' => 'required|string',
             'loan_amount' => 'required|numeric|min:0',
             'interest' => 'nullable|numeric|min:0',
             'total_installment' => 'required|numeric|min:1',
@@ -70,7 +71,8 @@ class LoanSectionController extends Controller
             'installment_type_id' => $request->installment_type_id,
             'loan_category_id' => $request->loan_category_id,
             'branch_id' => $request->branch_id,
-           'member_id' => $request->member_id,
+            'member_id' => $request->member_id,
+            'member_code' => $request->member_code,
 
             'loan_amount' => $request->loan_amount,
             'interest' => $interest,
@@ -129,6 +131,7 @@ class LoanSectionController extends Controller
             'loan_category_id' => 'required',
             'branch_id' => 'required',
             'member_id' => 'required',
+            'member_code' => 'required|string',
             'loan_amount' => 'required|numeric|min:0',
             'interest' => 'nullable|numeric|min:0',
             'total_installment' => 'required|numeric|min:1',
@@ -152,6 +155,7 @@ class LoanSectionController extends Controller
             'loan_category_id' => $request->loan_category_id,
             'branch_id' => $request->branch_id,
             'member_id' => $request->member_id,
+            'member_code' => $request->member_code,
 
             'loan_amount' => $request->loan_amount,
             'interest' => $interest,

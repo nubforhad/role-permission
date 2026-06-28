@@ -21,7 +21,7 @@
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">
-                    Collection #{{ $loanCollection->id }}
+                    Collection #{{ rand(10, 99) }}{{ $loanCollection->id }}{{ rand(10, 99) }}
                 </h5>
             </div>
 

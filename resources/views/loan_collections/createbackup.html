@@ -25,39 +25,75 @@
                     </div>
                 @endif
 
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('loan-collections.store') }}" method="POST">
                     @csrf
 
                     <div class="row">
 
-                        {{-- Member (select first) --}}
+                        {{-- Loan --}}
+                        <!-- <div class="col-md-6 mb-3">
+                            <label class="form-label">Loan</label>
+
+                            <select name="loan_section_id" class="form-control" required>
+                                <option value="">Select Loan</option>
+
+                                @foreach($loans as $loan)
+                                    <option value="{{ $loan->id }}">
+                                        Loan #{{ $loan->id }}
+                                        ({{ number_format($loan->loan_amount,2) }})
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div> -->
+                        <div class="col-md-6 mb-3">
+    <label class="form-label">Loan</label>
+
+    <select name="loan_section_id" id="loan_section_id" class="form-control" required>
+        <option value="">Select Loan</option>
+
+        @foreach($loans as $loan)
+            <option
+                value="{{ $loan->id }}"
+                data-member="{{ $loan->member_id }}"
+                data-code="{{ $loan->member->member_code ?? '' }}"
+                data-installment="{{ $loan->paid_per_installment }}">
+
+                Loan #{{ $loan->id }}
+                - {{ $loan->member->name ?? '' }}
+                ({{ number_format($loan->loan_amount,2) }})
+
+            </option>
+        @endforeach
+
+    </select>
+</div>
+
+                        {{-- Member --}}
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Member</label>
 
                             <select name="member_id" id="member_id" class="form-control" required>
+
                                 <option value="">Select Member</option>
 
                                 @foreach($members as $member)
+
                                     <option
                                         value="{{ $member->id }}"
                                         data-code="{{ $member->member_code }}">
-                                        {{ $member->name }} ({{ $member->member_code }})
+
+                                        {{ $member->name }}
+                                        ({{ $member->member_code }})
+
                                     </option>
+
                                 @endforeach
+
                             </select>
                         </div>
 
-                        {{-- Member Code (auto filled) --}}
+                        {{-- Member Code --}}
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Member Code</label>
 
@@ -69,27 +105,18 @@
                                 readonly>
                         </div>
 
-                        {{-- Loan: filtered to only the selected member's loans --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Loan</label>
+                        {{-- Installment Amount --}}
+                         <div class="col-md-6 mb-3">
+    <label class="form-label">Installment Amount</label>
 
-                            <select name="loan_section_id" id="loan_section_id" class="form-control" required disabled>
-                                <option value=""> Please select a member first. </option>
-                            </select>
-                        </div>
-
-                        {{-- Installment Amount (auto filled from selected loan) --}}
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Installment Amount</label>
-
-                            <input
-                                type="number"
-                                step="0.01"
-                                name="installment_amount"
-                                id="installment_amount"
-                                class="form-control"
-                                readonly>
-                        </div>
+    <input
+        type="number"
+        step="0.01"
+        name="installment_amount"
+        id="installment_amount"
+        class="form-control"
+        readonly>
+</div>
 
                         {{-- Paid Amount --}}
                         <div class="col-md-6 mb-3">
@@ -151,10 +178,15 @@
                             <label class="form-label">Status</label>
 
                             <select name="status" class="form-control">
+
                                 <option value="pending">Pending</option>
+
                                 <option value="paid">Paid</option>
+
                                 <option value="partial">Partial</option>
+
                                 <option value="late">Late</option>
+
                             </select>
                         </div>
 
@@ -181,64 +213,46 @@
 
     </div>
 </div>
-
+ 
 <script>
-// সব Loan এর data (member_id সহ) controller থেকেই flat array আকারে আসছে ($loanData)।
-// Member select করলে এখান থেকেই filter করে Loan dropdown বানানো হবে,
-// আলাদা করে AJAX কল করার দরকার নেই।
-const allLoans = @json($loanData);
 
-const memberSelect     = document.getElementById('member_id');
-const memberCodeInput  = document.getElementById('member_code');
-const loanSelect       = document.getElementById('loan_section_id');
-const installmentInput = document.getElementById('installment_amount');
+const loan = document.getElementById('loan_section_id');
+const member = document.getElementById('member_id');
+const memberCode = document.getElementById('member_code');
+const installment = document.getElementById('installment_amount');
 
-// ---- Member পরিবর্তন হলে ----
-memberSelect.addEventListener('change', function () {
+// Loan Change
+loan.addEventListener('change', function () {
 
-    const option   = this.options[this.selectedIndex];
-    const memberId = this.value;
+    let option = this.options[this.selectedIndex];
 
-    // আগের সিলেকশন রিসেট
-    installmentInput.value = '';
-
-    if (memberId === '') {
-        memberCodeInput.value = '';
-        loanSelect.disabled = true;
-        loanSelect.innerHTML = '<option value="">Please select a member first.</option>';
+    if(option.value == ''){
+        member.value = '';
+        memberCode.value = '';
+        installment.value = '';
         return;
     }
 
-    // Member Code auto fill
-    memberCodeInput.value = option.dataset.code ?? '';
+    // Auto Member Select
+    member.value = option.dataset.member;
 
-    // এই Member এর আন্ডারে যত Loan আছে সেগুলো খুঁজে আনা
-    const memberLoans = allLoans.filter(
-        loan => String(loan.member_id) === String(memberId)
-    );
+    // Auto Member Code
+    memberCode.value = option.dataset.code;
 
-    if (memberLoans.length === 0) {
-        loanSelect.disabled = true;
-        loanSelect.innerHTML = '<option value=""> No loan found for this member </option>';
-        return;
-    }
+    // Auto Installment Amount
+    installment.value = option.dataset.installment;
 
-    loanSelect.disabled = false;
-
-    let html = '<option value="">Select Loan</option>';
-
-    memberLoans.forEach(loan => {
-        html += `<option value="${loan.id}" data-installment="${loan.installment}">${loan.label}</option>`;
-    });
-
-    loanSelect.innerHTML = html;
 });
 
-// ---- Loan পরিবর্তন হলে Installment Amount auto fill ----
-loanSelect.addEventListener('change', function () {
-    const option = this.options[this.selectedIndex];
-    installmentInput.value = option.dataset.installment ?? '';
+// Member Change
+member.addEventListener('change', function(){
+
+    let option = this.options[this.selectedIndex];
+
+    memberCode.value = option.dataset.code ?? '';
+
 });
+
 </script>
 
 @endsection

@@ -91,14 +91,26 @@
                         <!-- Member -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Member</label>
-                            <select name="member_id" class="form-control" required>
+                            <select name="member_id" id="member_id" class="form-control" required>
                                 <option value="">Select Member</option>
                                 @foreach($members as $member)
-                                    <option value="{{ $member->id }}">
+                                    <option
+                                        value="{{ $member->id }}"
+                                        data-code="{{ $member->member_code }}">
                                         ({{ $member->member_code }})
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <!-- Member Code (auto filled from selected Member) -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Member Code</label>
+                            <input type="text"
+                                   name="member_code"
+                                   id="member_code"
+                                   class="form-control"
+                                   readonly>
                         </div>
 
                         <!-- Loan Amount -->
@@ -184,6 +196,9 @@
         const totalInstallment = document.getElementById('total_installment');
         const paidPerInstallment = document.getElementById('paid_per_installment');
 
+        const memberSelect = document.getElementById('member_id');
+        const memberCode = document.getElementById('member_code');
+
         function calculateTotal() {
             let amount = parseFloat(loanAmount.value) || 0;
             let rate = parseFloat(interest.value) || 0;
@@ -208,6 +223,12 @@
             }
         }
 
+        // Member সিলেক্ট করলে Member Code auto fill হবে
+        memberSelect.addEventListener('change', function () {
+            const option = this.options[this.selectedIndex];
+            memberCode.value = option.dataset.code ?? '';
+        });
+
         loanAmount.addEventListener('input', calculateTotal);
         interest.addEventListener('input', calculateTotal);
         totalInstallment.addEventListener('input', calculatePerInstallment);
@@ -215,4 +236,3 @@
 </script>
 
 @endsection
-
