@@ -35,15 +35,17 @@
                     <div class="row">
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">User</label>
-                            <select name="user_id" class="form-select">
-                                <option value="">Select User</option>
+                            <label class="form-label">By Employee</label>
+
+                            <select class="form-select" disabled>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->name }}
-                                    </option>
+                                    @if($user->id == auth()->id())
+                                        <option selected>{{ $user->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
+
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                         </div>
 
                         <div class="col-md-4 mb-3">
@@ -60,7 +62,12 @@
 
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Member Code</label>
-                            <input type="text" name="member_code" class="form-control" value="{{ old('member_code') }}" readonly>
+                            <input type="text" name="member_code" class="form-control" value="{{ old('member_code') }}" placeholder="Auto generate Member Code" readonly>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Member Name</label>
+                            <input type="text" name="member_name" class="form-control" value="{{ old('member_name') }}">
                         </div>
 
                         <div class="col-md-4 mb-3">

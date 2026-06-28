@@ -40,22 +40,25 @@
                     <div class="row">
 
                         <!-- User -->
+                        
                         <div class="col-md-6 mb-3">
-                            <label>User</label>
-                            <select name="user_id" class="form-control" readonly>
+                            <label class="form-label">User</label>
+
+                            <select class="form-control" disabled>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}"
-                                        {{ $loanSection->user_id == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }}
-                                    </option>
+                                    @if($user->id == auth()->id())
+                                        <option selected>{{ $user->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
+
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                         </div>
 
                         <!-- Category -->
                         <div class="col-md-6 mb-3">
                             <label>Category</label>
-                            <select name="loan_category_id" class="form-control">
+                            <select name="loan_category_id" class="form-control" >
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat->id }}"
                                         {{ $loanSection->loan_category_id == $cat->id ? 'selected' : '' }}>
@@ -91,6 +94,32 @@
                             </select>
                         </div>
 
+                        <!-- Member -->
+                        <div class="col-md-6 mb-3">
+                            <label>Member</label>
+                            <select name="member_id" id="member_id" class="form-control" disabled required>
+                                @foreach($members as $member)
+                                    <option
+                                        value="{{ $member->id }}"
+                                        data-code="{{ $member->member_code }}"
+                                        {{ $loanSection->member_id == $member->id ? 'selected' : '' }}>
+                                        ({{ $member->member_code }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Member Code (auto filled from selected Member) -->
+                        <div class="col-md-6 mb-3">
+                            <label>Member Code</label>
+                            <input type="text"
+                                   name="member_code"
+                                   id="member_code"
+                                   class="form-control"
+                                   value="{{ $loanSection->member_code }}"
+                                   readonly>
+                        </div>
+
                         <!-- Loan Amount -->
                         <div class="col-md-4 mb-3">
                             <label>Loan Amount</label>
@@ -99,7 +128,7 @@
                                    name="loan_amount"
                                    id="loan_amount"
                                    class="form-control"
-                                   value="{{ $loanSection->loan_amount }}">
+                                   value="{{ $loanSection->loan_amount }}" readonly >
                         </div>
 
                         <!-- Interest -->
@@ -199,6 +228,9 @@
         const totalInstallment = document.getElementById('total_installment');
         const paidPerInstallment = document.getElementById('paid_per_installment');
 
+        const memberSelect = document.getElementById('member_id');
+        const memberCode = document.getElementById('member_code');
+
         function calculateTotal() {
             let amount = parseFloat(loanAmount.value) || 0;
             let rate = parseFloat(interest.value) || 0;
@@ -222,6 +254,12 @@
                 paidPerInstallment.value = '';
             }
         }
+
+        // Member পরিবর্তন করলে Member Code-ও আপডেট হবে
+        memberSelect.addEventListener('change', function () {
+            const option = this.options[this.selectedIndex];
+            memberCode.value = option.dataset.code ?? '';
+        });
 
         loanAmount.addEventListener('input', calculateTotal);
         interest.addEventListener('input', calculateTotal);

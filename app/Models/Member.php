@@ -14,6 +14,7 @@ class Member extends Model
     protected $fillable = [
         'user_id',
         'branch_id',
+        'member_name',
         'member_code',
         'email',
         'father_name',

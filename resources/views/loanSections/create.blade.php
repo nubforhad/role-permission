@@ -37,7 +37,7 @@
                     <div class="row">
 
                         <!-- User -->
-                        <div class="col-md-6 mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <label class="form-label">User</label>
                             <select name="user_id" class="form-control" required>
                                 <option value="">Select User</option>
@@ -47,6 +47,19 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div> -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">User</label>
+
+                            <select class="form-control" disabled>
+                                @foreach($users as $user)
+                                    @if($user->id == auth()->id())
+                                        <option selected>{{ $user->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                         </div>
 
                         <!-- Branch -->

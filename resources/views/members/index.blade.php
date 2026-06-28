@@ -36,9 +36,9 @@
                                 <th width="60">SL</th>
                                 <th>Photo</th>
                                 <th>Member Code</th>
-                                <th>Name</th>
+                                <th>By Employee</th>
                                 <th>Mobile</th>
-                                <th>Email</th>
+                                <th>Member Name</th>
                                 <th>Branch</th>
                                 <th>Share Amount</th>
                                 <th>Status</th>
@@ -80,7 +80,7 @@
                                     </td>
 
                                     <td>
-                                        {{ $member->email }}
+                                        {{ $member->member_name }}
                                     </td>
 
                                     <td>

@@ -33,6 +33,7 @@ class MemberController extends Controller
             'branch_id' => 'nullable|exists:branches,id',
             'member_code' => 'nullable|unique:members,member_code',
             'email' => 'nullable|email',
+            'member_name' => 'nullable|string|max:1000',
             'mobile_number' => 'nullable|max:20',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'signature' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
