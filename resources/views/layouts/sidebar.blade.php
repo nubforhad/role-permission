@@ -107,6 +107,14 @@
 					</a> 
 				</li>             
                 
+                <li>
+					<a href="{{ route('loan-history.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">loan History</div>
+					</a> 
+				</li>             
+                
 
                 <li>
 					<a href="javascript:;" class="has-arrow">

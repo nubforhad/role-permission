@@ -17,7 +17,14 @@ use App\Http\Controllers\LoanSectionController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NomineeController;
 use App\Http\Controllers\LoanCollectionController;
-   
+   use App\Http\Controllers\LoanHistoryController;
+
+Route::get('/loan-history', [LoanHistoryController::class, 'index'])
+    ->name('loan-history.index');
+
+Route::post('/loan-history', [LoanHistoryController::class, 'search'])
+    ->name('loan-history.search');
+    
 Route::get('/', function () {
     return view('welcome');
 });

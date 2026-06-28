@@ -56,8 +56,53 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Total Customers</p>
-								   <h4 class="my-1 text-warning">8.4K</h4>
+								   <p class="mb-0 text-secondary">Total Paid</p>
+								   <h4 class="my-1 text-warning">{{ $totalPaid }}</h4>
+								   <p class="mb-0 font-13">+8.4% from last week</p>
+							   </div>
+							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
+							   </div>
+						   </div>
+					   </div>
+					</div>
+				  </div> 
+				  <div class="col">
+					<div class="card radius-10 border-start border-0 border-4 border-warning">
+					   <div class="card-body">
+						   <div class="d-flex align-items-center">
+							   <div>
+								   <p class="mb-0 text-secondary">Total Paid Amount</p>
+								   <h4 class="my-1 text-warning">{{ $totalPaid }}</h4>
+								   <p class="mb-0 font-13">+8.4% from last week</p>
+							   </div>
+							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
+							   </div>
+						   </div>
+					   </div>
+					</div>
+				  </div> 
+				  <div class="col">
+					<div class="card radius-10 border-start border-0 border-4 border-warning">
+					   <div class="card-body">
+						   <div class="d-flex align-items-center">
+							   <div>
+								   <p class="mb-0 text-secondary">Total Amount</p>
+								   <h4 class="my-1 text-warning"> {{  $totalAmount }} </h4>
+								   <p class="mb-0 font-13">+8.4% from last week</p>
+							   </div>
+							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
+							   </div>
+						   </div>
+					   </div>
+					</div>
+				  </div> 
+				  <div class="col">
+					<div class="card radius-10 border-start border-0 border-4 border-warning">
+					   <div class="card-body">
+						   <div class="d-flex align-items-center">
+							   <div>
+								   <p class="mb-0 text-secondary">Total Loan Amount</p>
+								   <h4 class="my-1 text-warning"> {{ $totalLoanAmount }} </h4>
 								   <p class="mb-0 font-13">+8.4% from last week</p>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
