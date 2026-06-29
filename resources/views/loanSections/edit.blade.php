@@ -42,7 +42,7 @@
                         <!-- User -->
                         
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">User</label>
+                            <label class="form-label">By Employee</label>
 
                             <select class="form-control" disabled>
                                 @foreach($users as $user)
@@ -97,7 +97,7 @@
                         <!-- Member -->
                         <div class="col-md-6 mb-3">
                             <label>Member</label>
-                            <select name="member_id" id="member_id" class="form-control" disabled required>
+                            <select name="member_id" id="member_id" class="form-control" readonly required>
                                 @foreach($members as $member)
                                     <option
                                         value="{{ $member->id }}"

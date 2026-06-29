@@ -5,7 +5,103 @@
 		<!--start page wrapper -->
 		<div class="page-wrapper">
 			<div class="page-content">
+				<style>
+					.form-select,
+.form-control{
+    height:45px;
+    border-radius:10px;
+}
+
+.btn{
+    height:45px;
+    border-radius:10px;
+}
+
+.card{
+    border-radius:15px;
+}
+
+.card-body{
+    padding:18px 22px;
+}
+				</style>
+				<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body py-3">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <!-- Left -->
+            <div>
+                <h4 class="fw-bold mb-0">
+                    <i class="bx bx-bar-chart-alt-2 text-primary"></i>
+                    Dashboard
+                </h4>
+                <small class="text-muted">
+                    Loan Management Summary
+                </small>
+            </div>
+
+            <!-- Right -->
+            <form action="{{ route('dashboard') }}" method="GET">
+
+                <div class="d-flex align-items-center gap-2 flex-nowrap">
+
+                    <select name="filter" class="form-select shadow-none" style="width:170px">
+
+                        <option value="">All Time</option>
+
+                        <option value="today" {{ request('filter')=='today'?'selected':'' }}>
+                            Today
+                        </option>
+
+                        <option value="yesterday" {{ request('filter')=='yesterday'?'selected':'' }}>
+                            Yesterday
+                        </option>
+
+                        <option value="week" {{ request('filter')=='week'?'selected':'' }}>
+                            This Week
+                        </option>
+
+                        <option value="month" {{ request('filter')=='month'?'selected':'' }}>
+                            This Month
+                        </option>
+
+                        <option value="year" {{ request('filter')=='year'?'selected':'' }}>
+                            This Year
+                        </option>
+
+                    </select>
+
+                    <input
+                        type="date"
+                        name="from"
+                        value="{{ request('from') }}"
+                        class="form-control shadow-none">
+
+                    <input
+                        type="date"
+                        name="to"
+                        value="{{ request('to') }}"
+                        class="form-control shadow-none">
+
+                    <button class="btn btn-primary px-4">
+                        <i class="bx bx-search"></i>
+                    </button>
+
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary px-4">
+                        <i class="bx bx-refresh"></i>
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
 				<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+					  
                    <div class="col">
 					 <div class="card radius-10 border-start border-0 border-4 border-info">
 						<div class="card-body">

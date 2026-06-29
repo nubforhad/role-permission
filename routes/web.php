@@ -24,7 +24,7 @@ Route::get('/loan-history', [LoanHistoryController::class, 'index'])
 
 Route::post('/loan-history', [LoanHistoryController::class, 'search'])
     ->name('loan-history.search');
-    
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 Route::get('/', function () {
     return view('welcome');
 });

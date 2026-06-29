@@ -36,7 +36,8 @@
                         <thead class="table-primary">
                             <tr>
                                 <th>#</th>
-                                <th>User</th>
+                                <th>By Employee </th>
+                                <th>Member Code</th>
                                 <th>Category</th>
                                 <th>Installment</th>
                                 <th>Total Installment</th>
@@ -62,6 +63,9 @@
                                     <!-- User -->
                                     <td>
                                         {{ $loan->user->name ?? 'N/A' }}
+                                    </td>
+                                    <td>
+                                        {{ $loan->member_code  ?? 'N/A' }}
                                     </td>
 
                                     <!-- Category -->
