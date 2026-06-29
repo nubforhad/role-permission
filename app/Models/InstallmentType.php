@@ -14,4 +14,6 @@ class InstallmentType extends Model
         'duration',
         'ins_code',
     ];
+
+    
 }

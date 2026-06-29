@@ -1,4 +1,4 @@
-{{-- resources/views/districts/index.blade.php --}}
+ 
 
 @extends('layouts.app')
 

@@ -8,14 +8,12 @@ use App\Models\InstallmentType;
 
 class DepositCategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = DepositCategory::with('installmentType')
-            ->latest()
-            ->get();
+     public function index()
+{
+    $categories = DepositCategory::latest()->paginate(10);
 
-        return view('deposit_categories.index', compact('categories'));
-    }
+    return view('deposit_categories.index', compact('categories'));
+}
 
     public function create()
     {

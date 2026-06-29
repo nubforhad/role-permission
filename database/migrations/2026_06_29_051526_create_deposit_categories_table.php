@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('installment_type_id')->nullable()->constrained()->nullOnDelete();
 
             $table->string('name');                 // DPS, FDR, Savings
             $table->string('code')->unique();       // DPS001

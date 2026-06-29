@@ -113,6 +113,23 @@
 						</div>
 						<div class="menu-title">loan History</div>
 					</a> 
+				</li>     
+
+                <li>
+					<a href="{{ route('deposit-categories.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Deposit Category</div>
+					</a> 
+				</li>             
+                
+
+                <li>
+					<a href="{{ route('deposits.index') }}" >
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Deposit</div>
+					</a> 
 				</li>             
                 
 
