@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('deposit_categories', function (Blueprint $table) {
-             $table->foreignId('installment_type_id')
-              ->nullable()
-              ->after('user_id')
-              ->constrained()
-              ->nullOnDelete();
+        Schema::create('deposit_withdraws', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('deposit_categories', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('deposit_withdraws');
     }
 };

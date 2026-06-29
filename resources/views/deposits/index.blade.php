@@ -57,7 +57,7 @@
                                 <td>{{ $deposit->deposit_no }}</td>
 
                                 <td>
-                                    {{ $deposit->member->name ?? 'N/A' }}
+                                    {{ $deposit->member->member_name ?? 'N/A' }}
                                 </td>
 
                                 <td>

@@ -20,6 +20,7 @@ use App\Http\Controllers\LoanCollectionController;
 use App\Http\Controllers\LoanHistoryController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\DepositCategoryController;
+use App\Http\Controllers\DepositCollectionController;
 
     Route::get('/loan-history', [LoanHistoryController::class, 'index'])
         ->name('loan-history.index');
@@ -52,6 +53,7 @@ use App\Http\Controllers\DepositCategoryController;
         Route::resource('loan-collections', LoanCollectionController::class);
         Route::resource('deposit-categories', DepositCategoryController::class);
         Route::resource('deposits', DepositController::class);
+        Route::resource('deposit-collections', DepositCollectionController::class);
 
     
         Route::get('/loan-collections/{loanCollection}/download-pdf', [LoanCollectionController::class, 'downloadPdf'])->name('loan-collections.download-pdf');

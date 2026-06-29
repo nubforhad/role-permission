@@ -36,6 +36,7 @@ class DepositController extends Controller
             'deposit_category_id' => 'required',
             'deposit_amount' => 'required|numeric',
             'start_date' => 'required|date',
+             'status' => 'required|in:running,completed,closed,cancelled',
         ]);
 
         // auto calculation (optional but useful)
@@ -64,7 +65,7 @@ class DepositController extends Controller
             'start_date' => $request->start_date,
             'maturity_date' => $request->maturity_date,
 
-            'status' => 'active',
+             'status' => $request->status,
             'remark' => $request->remark,
         ]);
 
