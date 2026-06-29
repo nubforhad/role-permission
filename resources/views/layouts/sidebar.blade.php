@@ -115,23 +115,45 @@
 					</a> 
 				</li>     
 
-                <li>
-					<a href="{{ route('deposit-categories.index') }}" >
+
+
+				<li>
+					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
-						<div class="menu-title">Deposit Category</div>
-					</a> 
-				</li>             
+						<div class="menu-title">Loan</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('loan-categories.index') }}"><i class='bx bx-radio-circle'></i>Loan Category</a>
+						</li>
+						<li> <a href="{{ route('loan-sections.index') }}"><i class='bx bx-radio-circle'></i>Loan Section </a>
+						</li>						 
+						<li> <a href="{{ route('loan-collections.index') }}"><i class='bx bx-radio-circle'></i>Loan Collection</a>
+						</li>
+						 						 
+					</ul>
+				</li>
+
+              
                 
 
                 <li>
-					<a href="{{ route('deposits.index') }}" >
+					<a href="javascript:;" class="has-arrow">
 						<div class="parent-icon"><i class="bx bx-category"></i>
 						</div>
 						<div class="menu-title">Deposit</div>
-					</a> 
-				</li>             
-                
+					</a>
+					<ul>
+						<li> <a href="{{ route('deposit-categories.index') }}"><i class='bx bx-radio-circle'></i>Deposit Category</a>
+						</li>
+						<li> <a href="{{ route('deposits.index') }}"><i class='bx bx-radio-circle'></i>Deposit </a>
+						</li>						 
+						<li> <a href="{{ route('deposit-withdraws.index') }}"><i class='bx bx-radio-circle'></i>Deposit Withdraw</a>
+						</li>
+						<li> <a href="{{ route('deposit-collections.index') }}"><i class='bx bx-radio-circle'></i>Deposit Collection</a>
+						</li>						 
+					</ul>
+				</li>
 
                 <li>
 					<a href="javascript:;" class="has-arrow">
