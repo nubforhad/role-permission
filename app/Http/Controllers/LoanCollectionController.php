@@ -16,15 +16,10 @@ class LoanCollectionController extends Controller
      */
     public function create()
     {
-        // 'member' eager load করা হলো, কারণ blade তে $loan->member ব্যবহার হচ্ছে
-        // (আগে 'user' eager load করা ছিল, যা এই view তে আদৌ লাগছিল না)
+
         $loans   = LoanSection::with('member')->get();
         $members = Member::all();
 
-        // JS এর জন্য Loan এর তথ্য আগে থেকেই flat array বানিয়ে রাখা হলো,
-        // যাতে blade ফাইলের ভেতর @json() এর মধ্যে multi-line closure/array
-        // লেখার দরকার না পড়ে (এটা কিছু editor/linter কে বিভ্রান্ত করে এবং
-        // মেইনটেইন করাও কঠিন হয়ে যায়)
         $loanData = $loans->map(function ($loan) {
             return [
                 'id'          => $loan->id,
@@ -56,9 +51,7 @@ class LoanCollectionController extends Controller
             'remark'             => 'nullable',
         ]);
 
-        // সিকিউরিটি চেক: ফর্মে যে Loan সিলেক্ট হয়েছে সেটা যেন আসলেই
-        // সিলেক্ট করা Member এর Loan হয় (UI থেকে filter করা হলেও, server side এ
-        // confirm না করলে কেউ inspect element করে অন্য member এর loan id পাঠাতে পারবে)
+
         $loan = LoanSection::find($request->loan_section_id);
 
         if (! $loan || $loan->member_id != $request->member_id) {
