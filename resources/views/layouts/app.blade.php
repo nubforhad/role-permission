@@ -207,6 +207,8 @@
 	<script src="{{ asset('assets/plugins/chartjs/js/chart.js') }}"></script>
 	<script src="{{ asset('assets/js/index.js') }}"></script>
 	<script src="{{ asset('assets/js/app.js') }}"></script>
+@stack('scripts')
+
 	<script>
 $(document).ready(function () {
     $(".mobile-toggle-menu").click(function () {
@@ -243,7 +245,7 @@ $(document).ready(function () {
 	<script>
 		new PerfectScrollbar(".app-container")
 	</script>
-	@stack('js')
+ 
 </body>
 
 </html>

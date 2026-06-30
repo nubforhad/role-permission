@@ -164,4 +164,31 @@ class LoanUpController extends Controller
             ->route('loan-ups.index')
             ->with('success', 'Loan deleted successfully!');
     }
+
+
+    public function approve($id)
+    {
+        $loan = LoanUp::findOrFail($id);
+
+        $loan->update([
+            'status' => 'Approved',
+            'approval_date' => now(),
+        ]);
+
+        return back()->with('success', 'Loan Approved Successfully');
+    }
+
+    public function reject($id)
+    {
+        $loan = LoanUp::findOrFail($id);
+
+        $loan->update([
+            'status' => 'Rejected',
+            'approval_date' => now(),
+        ]);
+
+        return back()->with('success', 'Loan Rejected Successfully');
+    }
+
+
 }

@@ -33,7 +33,7 @@
 
                             <div class="col-md-6 mb-2">
                                 <label class="text-muted">Member</label>
-                                <h6>{{ $loanUp->member->name ?? 'N/A' }}</h6>
+                                <h6>{{ $loanUp->member->member_name ?? 'N/A' }}</h6>
                             </div>
 
                             <div class="col-md-6 mb-2">
@@ -144,12 +144,41 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
 
+                        <h5 class="mb-3">Status</h5>
+
+                         @if($loanUp->status == 'Pending')
+
+                        <form action="{{ route('loan-ups.approve', $loanUp->id) }}" method="POST" class="d-inline my-3">
+                            @csrf
+                            <button class="btn btn-success btn-sm">
+                                Approve
+                            </button>
+                        </form>
+
+                        <form action="{{ route('loan-ups.reject', $loanUp->id) }}" method="POST" class="d-inline my-3">
+                            @csrf
+                            <button class="btn btn-danger btn-sm">
+                                Reject
+                            </button>
+                        </form>
+
+                        @endif
+
+                    </div>
+                </div>
+
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
                         <h5 class="mb-3">Actions</h5>
 
                         <a href="{{ route('loan-ups.edit', $loanUp->id) }}"
                            class="btn btn-warning w-100 mb-2">
                             <i class="bx bx-edit"></i> Edit Loan
                         </a>
+
+                        
 
                         <form action="{{ route('loan-ups.destroy', $loanUp->id) }}"
                               method="POST">
@@ -166,6 +195,7 @@
                             </button>
 
                         </form>
+
 
                     </div>
                 </div>

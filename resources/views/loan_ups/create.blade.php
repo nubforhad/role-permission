@@ -129,38 +129,59 @@
     </div>
 </div>
 
-@endsection
 
+
+@endsection
 
 {{-- 🔥 JS CALCULATION --}}
 @push('scripts')
 <script>
     let rate = 0;
 
-    document.getElementById('category').addEventListener('change', function () {
-        let selected = this.options[this.selectedIndex];
+    const category = document.getElementById('category');
+    const loanAmount = document.getElementById('loan_amount');
+    const duration = document.getElementById('duration');
+
+    function updateCategoryData() {
+        let selected = category.options[category.selectedIndex];
+
+        if (!selected) return;
 
         rate = parseFloat(selected.getAttribute('data-rate')) || 0;
 
         document.getElementById('interest_rate').value = rate;
-        document.getElementById('interest_type').value = selected.getAttribute('data-type');
-    });
+        document.getElementById('interest_type').value = selected.getAttribute('data-type') || '';
+    }
 
     function calculateLoan() {
 
-        let amount = parseFloat(document.getElementById('loan_amount').value) || 0;
-        let duration = parseInt(document.getElementById('duration').value) || 0;
+        let amount = parseFloat(loanAmount.value) || 0;
+        let dur = parseInt(duration.value) || 0;
 
-        let interest = (amount * rate * duration) / 100;
+        let interest = (amount * rate * dur) / 100;
         let total = amount + interest;
-        let emi = duration > 0 ? total / duration : 0;
+        let emi = dur > 0 ? total / dur : 0;
 
         document.getElementById('total_interest').value = interest.toFixed(2);
         document.getElementById('total_payable').value = total.toFixed(2);
         document.getElementById('emi').value = emi.toFixed(2);
     }
 
-    document.getElementById('loan_amount').addEventListener('input', calculateLoan);
-    document.getElementById('duration').addEventListener('input', calculateLoan);
+    // category change
+    category.addEventListener('change', function () {
+        updateCategoryData();
+        calculateLoan();
+    });
+
+    // input change
+    loanAmount.addEventListener('input', calculateLoan);
+    duration.addEventListener('input', calculateLoan);
+
+    // 🔥 IMPORTANT: page load e auto trigger
+    window.addEventListener('load', function () {
+        updateCategoryData();
+        calculateLoan();
+    });
+
 </script>
-@endpush
+@endpush 

@@ -64,6 +64,9 @@ use App\Http\Controllers\LoanUpController;
         // new loan up 
         Route::resource('loan-up-categories', LoanUpCategoryController::class);
         Route::resource('loan-ups', LoanUpController::class);
+        
+        Route::post('/loan-ups/{id}/approve', [LoanUpController::class, 'approve'])->name('loan-ups.approve');
+        Route::post('/loan-ups/{id}/reject', [LoanUpController::class, 'reject'])->name('loan-ups.reject');
 
     
         Route::get('/loan-collections/{loanCollection}/download-pdf', [LoanCollectionController::class, 'downloadPdf'])->name('loan-collections.download-pdf');
