@@ -5,120 +5,108 @@
 <div class="page-wrapper">
     <div class="page-content">
 
+        <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="mb-0">Loan Up Installments</h4>
+                <small class="text-muted">All installment records</small>
+            </div>
 
-            <h4>Loan Up Installments</h4>
-
-            {{-- ➕ CREATE BUTTON --}}
-    <a href="{{ route('loanup.installment.create', request()->loan_id) }}"
-       class="btn btn-primary">
-        + Create Installment
-    </a>
-
+            <a href="{{ route('loanup.installment.create') }}" class="btn btn-primary">
+                + Add Installment
+            </a>
         </div>
 
+        <!-- Table -->
         <div class="card">
             <div class="card-body">
 
-                <table class="table table-bordered table-striped">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Loan</th>
+                                <th>Installment No</th>
+                                <th>Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th width="180">Action</th>
+                            </tr>
+                        </thead>
 
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Loan ID</th>
-                            <th>Installment No</th>
-                            <th>Amount</th>
-                            <th>Paid</th>
-                            <th>Due</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th width="200">Action</th>
-                        </tr>
-                    </thead>
+                        <tbody>
+                            @forelse($installments as $key => $item)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
 
-                    <tbody>
+                                    <td>
+                                        {{ $item->loan->title ?? 'N/A' }}
+                                    </td>
 
-                        @forelse($installments as $inst)
+                                    <td>
+                                        <span class="badge bg-info">
+                                            {{ $item->installment_no }}
+                                        </span>
+                                    </td>
 
-                        <tr>
-                            <td>{{ $inst->id }}</td>
+                                    <td>
+                                        {{ number_format($item->amount, 2) }}
+                                    </td>
 
-                            <td>
-                                <a href="{{ route('loanups.show', $inst->loan_up_id) }}">
-                                    {{ $inst->loan_up_id }}
-                                </a>
-                            </td>
+                                    <td class="text-success">
+                                        {{ number_format($item->paid_amount, 2) }}
+                                    </td>
 
-                            <td>{{ $inst->installment_no }}</td>
+                                    <td class="text-danger">
+                                        {{ number_format($item->due_amount, 2) }}
+                                    </td>
 
-                            <td>{{ number_format($inst->amount, 2) }}</td>
+                                    <td>
+                                        {{ $item->due_date }}
+                                    </td>
 
-                            <td>{{ number_format($inst->paid_amount, 2) }}</td>
+                                    <td>
+                                        @if($item->status == 'Paid')
+                                            <span class="badge bg-success">Paid</span>
+                                        @elseif($item->status == 'Partial')
+                                            <span class="badge bg-warning text-dark">Partial</span>
+                                        @else
+                                            <span class="badge bg-danger">Pending</span>
+                                        @endif
+                                    </td>
 
-                            <td>{{ number_format($inst->due_amount, 2) }}</td>
+                                    <td>
+                                        <a href="{{ route('loanup.installment.show', $item->id) }}"
+                                           class="btn btn-sm btn-info">
+                                            View
+                                        </a>
 
-                            <td>{{ $inst->due_date }}</td>
+                                        <a href="{{ route('loanup.installment.edit', $item->id) }}"
+                                           class="btn btn-sm btn-primary">
+                                            Edit
+                                        </a>
 
-                            <td>
-                                @if($inst->status == 'Paid')
-                                    <span class="badge bg-success">Paid</span>
-                                @elseif($inst->status == 'Partial')
-                                    <span class="badge bg-warning text-dark">Partial</span>
-                                @else
-                                    <span class="badge bg-danger">Pending</span>
-                                @endif
-                            </td>
+                                        <a href="{{ route('loanup.installment.destroy', $item->id) }}"
+                                           onclick="return confirm('Are you sure?')"
+                                           class="btn btn-sm btn-danger">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" class="text-center text-muted">
+                                        No installments found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
 
-                            <td>
-
-                                {{-- VIEW --}}
-                                <a href="{{ route('loanup.installment.show', $inst->id) }}"
-                                   class="btn btn-info btn-sm">
-                                    View
-                                </a>
-
-                                {{-- PAY --}}
-                                @if($inst->status != 'Paid')
-
-                                <form action="{{ route('loanup.installment.pay', $inst->id) }}"
-                                      method="POST"
-                                      style="display:inline-block;">
-                                    @csrf
-                                    <button class="btn btn-success btn-sm">
-                                        Pay
-                                    </button>
-                                </form>
-
-                                @endif
-
-                                {{-- DELETE --}}
-                                <form action="{{ route('loanup.installment.delete', $inst->id) }}"
-                                      method="POST"
-                                      style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Delete this installment?')">
-                                        Delete
-                                    </button>
-                                </form>
-
-                            </td>
-                        </tr>
-
-                        @empty
-
-                        <tr>
-                            <td colspan="9" class="text-center text-muted">
-                                No Installments Found
-                            </td>
-                        </tr>
-
-                        @endforelse
-
-                    </tbody>
-
-                </table>
+                    </table>
+                </div>
 
             </div>
         </div>
