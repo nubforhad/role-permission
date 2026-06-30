@@ -23,6 +23,10 @@ use App\Http\Controllers\DepositCategoryController;
 use App\Http\Controllers\DepositCollectionController;
 use App\Http\Controllers\DepositWithdrawController;
 
+// new loan up 
+use App\Http\Controllers\LoanUpCategoryController;
+use App\Http\Controllers\LoanUpController;
+
     Route::get('/loan-history', [LoanHistoryController::class, 'index'])
         ->name('loan-history.index');
 
@@ -56,6 +60,10 @@ use App\Http\Controllers\DepositWithdrawController;
         Route::resource('deposits', DepositController::class);
         Route::resource('deposit-collections', DepositCollectionController::class);
         Route::resource('deposit-withdraws', DepositWithdrawController::class);
+
+        // new loan up 
+        Route::resource('loan-up-categories', LoanUpCategoryController::class);
+        Route::resource('loan-ups', LoanUpController::class);
 
     
         Route::get('/loan-collections/{loanCollection}/download-pdf', [LoanCollectionController::class, 'downloadPdf'])->name('loan-collections.download-pdf');

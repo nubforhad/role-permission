@@ -21,6 +21,25 @@
 						<div class="menu-title">Dashboard</div>
 					</a> 
 				</li>
+
+				<li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon"><i class="bx bx-category"></i>
+						</div>
+						<div class="menu-title">Loan UP</div>
+					</a>
+					<ul>
+						<li> <a href="{{ route('loan-up-categories.index') }}"><i class='bx bx-radio-circle'></i>Loan Up Category</a>
+						</li>
+						<li> <a href="{{ route('loan-ups.index') }}"><i class='bx bx-radio-circle'></i>Loan Up </a>
+						</li>						 
+						<li> <a href="{{ route('loan-collections.index') }}"><i class='bx bx-radio-circle'></i>Loan Collection</a>
+						</li>
+						 						 
+					</ul>
+				</li>
+
+
 				<li>
 					<a href="{{ route('users.index') }}">
 						<div class="parent-icon"><i class="bx bx-category"></i>
