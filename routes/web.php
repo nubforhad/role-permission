@@ -27,6 +27,10 @@ use App\Http\Controllers\DepositWithdrawController;
 use App\Http\Controllers\LoanUpCategoryController;
 use App\Http\Controllers\LoanUpController;
 
+
+use App\Http\Controllers\LoanUpInstallmentController;
+
+
     Route::get('/loan-history', [LoanHistoryController::class, 'index'])
         ->name('loan-history.index');
 
@@ -64,9 +68,40 @@ use App\Http\Controllers\LoanUpController;
         // new loan up 
         Route::resource('loan-up-categories', LoanUpCategoryController::class);
         Route::resource('loan-ups', LoanUpController::class);
-        
+
         Route::post('/loan-ups/{id}/approve', [LoanUpController::class, 'approve'])->name('loan-ups.approve');
         Route::post('/loan-ups/{id}/reject', [LoanUpController::class, 'reject'])->name('loan-ups.reject');
+
+         Route::prefix('loan-up/installments')->name('loanup.installment.')->group(function () {
+
+                Route::get('/{loan_id?}', [LoanUpInstallmentController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/create/{loan_id}', [LoanUpInstallmentController::class, 'create'])
+                    ->name('create');
+
+                Route::post('/store', [LoanUpInstallmentController::class, 'store'])
+                    ->name('store');
+
+                Route::get('/edit/{id}', [LoanUpInstallmentController::class, 'edit'])
+                    ->name('edit');
+
+                Route::post('/update/{id}', [LoanUpInstallmentController::class, 'update'])
+                    ->name('update');
+
+                Route::get('/show/{id}', [LoanUpInstallmentController::class, 'show'])
+                    ->name('show');
+
+                Route::post('/{id}/pay', [LoanUpInstallmentController::class, 'pay'])
+                    ->name('pay');
+
+                Route::post('/{id}/partial', [LoanUpInstallmentController::class, 'partialPay'])
+                    ->name('partial');
+
+                Route::delete('/{id}', [LoanUpInstallmentController::class, 'destroy'])
+                    ->name('delete');
+
+            });
 
     
         Route::get('/loan-collections/{loanCollection}/download-pdf', [LoanCollectionController::class, 'downloadPdf'])->name('loan-collections.download-pdf');
