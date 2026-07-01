@@ -22,6 +22,8 @@ use App\Http\Controllers\DepositController;
 use App\Http\Controllers\DepositCategoryController;
 use App\Http\Controllers\DepositCollectionController;
 use App\Http\Controllers\DepositWithdrawController;
+use App\Http\Controllers\LoanUInstallmentController;
+use App\Http\Controllers\LoanInstallmentController;
 
 // new loan up 
 use App\Http\Controllers\LoanUpCategoryController;
@@ -68,6 +70,12 @@ use App\Http\Controllers\LoanUpInstallmentController;
         // new loan up 
         Route::resource('loan-up-categories', LoanUpCategoryController::class);
         Route::resource('loan-ups', LoanUpController::class);
+        Route::get('/loan-installments', [LoanInstallmentController::class, 'index'])->name('loan-installments.index');
+        Route::post('/loan-installments/search', [LoanInstallmentController::class, 'search']);
+        Route::post('/loan-installments/pay', [LoanInstallmentController::class, 'pay']);
+        // Route::resource('loan-installments', LoanInstallmentController::class);
+ 
+        Route::resource('loan-u-installments', LoanUInstallmentController::class);
 
         Route::post('/loan-ups/{id}/approve', [LoanUpController::class, 'approve'])->name('loan-ups.approve');
         Route::post('/loan-ups/{id}/reject', [LoanUpController::class, 'reject'])->name('loan-ups.reject');

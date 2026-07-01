@@ -22,7 +22,7 @@ class LoanSection extends Model
         'upline_status',
         'interest',
         'total_amount',
-        'total_installment',
+        'total_installment', 
         'paid_per_installment',
         'remark',
     ];

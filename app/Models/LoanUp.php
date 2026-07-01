@@ -40,4 +40,8 @@ class LoanUp extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function installments()
+    {
+        return $this->hasMany(LoanInstallment::class);
+    }
 }

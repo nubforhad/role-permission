@@ -7,9 +7,33 @@ use App\Models\LoanUpCategory;
 use App\Models\Member;
 use App\Models\Branch;
 use Illuminate\Http\Request;
+use App\Models\LoanInstallment;
 
 class LoanUpController extends Controller
 {
+
+
+    private function generateInstallments($loan)
+    {
+        $total = $loan->total_payable;
+        $duration = $loan->duration;
+
+        $emi = $loan->emi_amount;
+
+        for ($i = 1; $i <= $duration; $i++) {
+
+            LoanInstallment::create([
+                'loan_up_id' => $loan->id,
+                'installment_no' => $i,
+                'amount' => $emi,
+                'paid_amount' => 0,
+                'due_amount' => $emi,
+                'due_date' => now()->addMonths($i),
+                'status' => 'Pending',
+            ]);
+        }
+    }
+
     /**
      * Display a listing of loans
      */
@@ -37,53 +61,136 @@ class LoanUpController extends Controller
     /**
      * Store new loan
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'branch_id' => 'required',
-            'member_id' => 'required',
-            'loan_up_category_id' => 'required',
-            'loan_amount' => 'required|numeric|min:0',
-            'duration' => 'required|integer|min:1',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'branch_id' => 'required',
+    //         'member_id' => 'required',
+    //         'loan_up_category_id' => 'required',
+    //         'loan_amount' => 'required|numeric|min:0',
+    //         'duration' => 'required|integer|min:1',
+    //     ]);
 
-        $category = LoanUpCategory::findOrFail($request->loan_up_category_id);
+    //     $category = LoanUpCategory::findOrFail($request->loan_up_category_id);
 
-        $loanAmount = $request->loan_amount;
-        $rate = $category->interest_rate;
-        $duration = $request->duration;
+    //     $loanAmount = $request->loan_amount;
+    //     $rate = $category->interest_rate;
+    //     $duration = $request->duration;
 
-        // 🔥 Interest Calculation (Simple Interest)
-        $interest = ($loanAmount * $rate * $duration) / 100;
+    //     // 🔥 Interest Calculation (Simple Interest)
+    //     $interest = ($loanAmount * $rate * $duration) / 100;
 
-        $totalPayable = $loanAmount + $interest;
-        $emi = $duration > 0 ? $totalPayable / $duration : 0;
+    //     $totalPayable = $loanAmount + $interest;
+    //     $emi = $duration > 0 ? $totalPayable / $duration : 0;
 
-        $loan = LoanUp::create([
-            'branch_id' => $request->branch_id,
-            'member_id' => $request->member_id,
-            'loan_up_category_id' => $request->loan_up_category_id,
+    //     $loan = LoanUp::create([
+    //         'branch_id' => $request->branch_id,
+    //         'member_id' => $request->member_id,
+    //         'loan_up_category_id' => $request->loan_up_category_id,
 
-            'loan_amount' => $loanAmount,
-            'interest_rate' => $rate,
-            'interest_type' => $category->interest_type,
+    //         'loan_amount' => $loanAmount,
+    //         'interest_rate' => $rate,
+    //         'interest_type' => $category->interest_type,
 
-            'duration' => $duration,
-            'duration_type' => $category->duration_type,
-            'installment_type' => $category->installment_type,
+    //         'duration' => $duration,
+    //         'duration_type' => $category->duration_type,
+    //         'installment_type' => $category->installment_type,
 
-            'total_interest' => $interest,
-            'total_payable' => $totalPayable,
-            'emi_amount' => $emi,
+    //         'total_interest' => $interest,
+    //         'total_payable' => $totalPayable,
+    //         'emi_amount' => $emi,
 
-            'status' => 'Pending',
-        ]);
+    //         'status' => 'Pending',
+    //     ]);
 
-        return redirect()
-            ->route('loan-ups.index')
-            ->with('success', 'Loan created successfully!');
+    //     return redirect()
+    //         ->route('loan-ups.index')
+    //         ->with('success', 'Loan created successfully!');
+    // }
+
+
+public function store(Request $request)
+{
+    $request->validate([
+        'branch_id' => 'required',
+        'member_id' => 'required',
+        'loan_up_category_id' => 'required',
+        'loan_amount' => 'required|numeric|min:0',
+        'duration' => 'required|integer|min:1',
+    ]);
+
+    /**
+     * 🚨 CHECK ACTIVE INSTALLMENTS (REAL LOGIC)
+     */
+    $hasPendingInstallment = LoanInstallment::whereHas('loan', function ($q) use ($request) {
+        $q->where('member_id', $request->member_id);
+    })
+    ->whereIn('status', ['Pending', 'Partial'])
+    ->exists();
+
+    if ($hasPendingInstallment) {
+        return redirect()->back()->with('warning',
+            'This member has unpaid installments. Please complete previous loan first.'
+        );
     }
 
+    $category = LoanUpCategory::findOrFail($request->loan_up_category_id);
+
+    $loanAmount = $request->loan_amount;
+    $rate = $category->interest_rate;
+    $duration = $request->duration;
+
+    // Interest
+    $interest = ($loanAmount * $rate * $duration) / 100;
+
+    $totalPayable = $loanAmount + $interest;
+
+    $emi = $duration > 0 ? $totalPayable / $duration : 0;
+
+    /**
+     * ✅ CREATE LOAN
+     */
+    $loan = LoanUp::create([
+        'branch_id' => $request->branch_id,
+        'member_id' => $request->member_id,
+        'loan_up_category_id' => $request->loan_up_category_id,
+
+        'loan_amount' => $loanAmount,
+        'interest_rate' => $rate,
+        'interest_type' => $category->interest_type,
+
+        'duration' => $duration,
+        'duration_type' => $category->duration_type,
+        'installment_type' => $category->installment_type,
+
+        'total_interest' => $interest,
+        'total_payable' => $totalPayable,
+        'emi_amount' => $emi,
+
+        'status' => 'Pending',
+    ]);
+
+    /**
+     * 🚀 GENERATE INSTALLMENTS
+     */
+    // for ($i = 1; $i <= $duration; $i++) {
+    //     LoanInstallment::create([
+    //         'loan_up_id' => $loan->id,
+    //         'installment_no' => $i,
+    //         'amount' => $emi,
+    //         'paid_amount' => 0,
+    //         'due_amount' => $emi,
+    //         'due_date' => now()->addMonths($i),
+    //         'status' => 'Pending',
+    //     ]);
+    // }
+
+    return redirect()
+        ->route('loan-ups.index')
+        ->with('success', 'Loan created successfully!');
+}
+
+ 
     /**
      * Show single loan
      */
@@ -174,7 +281,7 @@ class LoanUpController extends Controller
             'status' => 'Approved',
             'approval_date' => now(),
         ]);
-
+$this->generateInstallments($loan);
         return back()->with('success', 'Loan Approved Successfully');
     }
 
@@ -189,6 +296,9 @@ class LoanUpController extends Controller
 
         return back()->with('success', 'Loan Rejected Successfully');
     }
+
+
+
 
 
 }

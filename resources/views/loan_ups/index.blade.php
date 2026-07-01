@@ -52,7 +52,7 @@
                                     <!-- Member -->
                                     <td>
                                         <strong>
-                                            {{ $loan->member->name ?? 'N/A' }}
+                                            {{ $loan->member->member_name ?? 'N/A' }}
                                         </strong>
                                     </td>
 

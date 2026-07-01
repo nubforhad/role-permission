@@ -33,6 +33,8 @@
 						</li>
 						<li> <a href="{{ route('loan-ups.index') }}"><i class='bx bx-radio-circle'></i>Loan Up </a>
 						</li>						 
+						<li> <a href="{{ route('loan-installments.index') }}"><i class='bx bx-radio-circle'></i>Loan Installment</a>
+						<li> <a href="{{ route('loan-u-installments.index') }}"><i class='bx bx-radio-circle'></i>Loan U Installment</a>
 						<li> <a href="{{ route('loanup.installment.index') }}"><i class='bx bx-radio-circle'></i>Loan Up Installment</a>
 						</li>
 						 						 

@@ -30,7 +30,9 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}"/>
 	    @stack('css')
-	<title> Micro Credit  </title>
+	<title>@yield('title', 'Home micro ')  </title>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -39,6 +41,22 @@
 		@include('layouts.sidebar')
 		<!--end sidebar wrapper -->
 		@include('layouts.header')
+		    
+	 
+			@if(session('success') || session('warning') || session('error'))
+			<script>
+				Swal.fire({
+					icon: "{{ session('success') ? 'success' : (session('warning') ? 'warning' : 'error') }}",
+					title: "Message",
+					text: "{{ session('success') ?? session('warning') ?? session('error') }}",
+					timer: 3000,
+					showConfirmButton: false
+				});
+			</script>
+		@endif
+		 
+
+
 		@yield('content')
 		<!--start overlay-->
 		 <div class="overlay toggle-icon"></div>
